@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Description: Fieldwork commerce database and narrowly scoped Vercel OIDC access
 Parameters:
   VercelTeam:
@@ -9,10 +9,10 @@ Parameters:
     Default: fieldwork-commerce
   CreateOidcProvider:
     Type: String
-    AllowedValues: ['true', 'false']
-    Default: 'true'
+    AllowedValues: ["true", "false"]
+    Default: "true"
 Conditions:
-  NeedsProvider: !Equals [!Ref CreateOidcProvider, 'true']
+  NeedsProvider: !Equals [!Ref CreateOidcProvider, "true"]
 Resources:
   CommerceTable:
     Type: AWS::DynamoDB::Table
@@ -48,13 +48,11 @@ Resources:
           Projection:
             ProjectionType: ALL
           ProvisionedThroughput:
-            ReadCapacityUnits: 3
-            WriteCapacityUnits: 2
+            ReadCapacityUnits: 5
+            WriteCapacityUnits: 5
       TimeToLiveSpecification:
         AttributeName: expiresAt
         Enabled: true
-      SSESpecification:
-        SSEEnabled: true
       Tags:
         - Key: Project
           Value: fieldwork-commerce
@@ -71,7 +69,7 @@ Resources:
     Properties:
       RoleName: fieldwork-vercel-commerce
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Effect: Allow
             Principal:
@@ -87,7 +85,7 @@ Resources:
       Policies:
         - PolicyName: fieldwork-table-only
           PolicyDocument:
-            Version: '2012-10-17'
+            Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:

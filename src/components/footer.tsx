@@ -1,5 +1,50 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 export function Footer() {
-  return <footer className="site-footer"><div className="container footer-grid"><div><Link href="/" className="wordmark">fieldwork<span>®</span></Link><p>Good things for the everyday.<br/>Chosen with care. Made to go with you.</p><span className="footer-label">A more considered kind of collection.</span></div><div><h3>The collection</h3><Link href="/shop">Shop all <ArrowUpRight size={13}/></Link><Link href="/shop?category=carry">Carry</Link><Link href="/shop?category=wear">Wear</Link></div><div><h3>Make yourself at home</h3><Link href="/shop?category=home">Home & living</Link><Link href="/shop?category=tech">Everyday tech</Link><Link href="/wishlist">Your saved items</Link></div><div><h3>Your corner</h3><Link href="/account">Your profile</Link><Link href="/cart">Shopping bag</Link><Link href="/about">About Fieldwork</Link></div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} Fieldwork</span><span>Demonstration store · No orders or payments are processed.</span><span>Thoughtfully put together <span aria-hidden="true">↗</span></span></div></footer>;
+  return (
+    <footer className="site-footer">
+      <div className="container footer-grid">
+        <div>
+          <Link href="/" className="wordmark">
+            fieldwork<span>®</span>
+          </Link>
+          <p>
+            Good things for the everyday.
+            <br />
+            Chosen with care. Made to go with you.
+          </p>
+          <span className="footer-label">
+            A more considered kind of collection.
+          </span>
+        </div>
+        <div>
+          <h3>The collection</h3>
+          <Link href="/shop">
+            Shop all <ArrowUpRight size={13} />
+          </Link>
+          <Link href="/shop?category=carry">Carry</Link>
+          <Link href="/shop?category=wear">Wear</Link>
+        </div>
+        <div>
+          <h3>Make yourself at home</h3>
+          <Link href="/shop?category=home">Home & living</Link>
+          <Link href="/shop?category=tech">Everyday tech</Link>
+          <Link href="/wishlist">Your saved items</Link>
+        </div>
+        <div>
+          <h3>Your corner</h3>
+          <Link href="/account">Your profile</Link>
+          <Link href="/cart">Shopping bag</Link>
+          <Link href="/about">About Fieldwork</Link>
+        </div>
+      </div>
+      <div className="container footer-bottom">
+        <span>© {new Date().getFullYear()} Fieldwork</span>
+        <span>Demonstration store · No orders or payments are processed.</span>
+        <span>
+          Thoughtfully put together <span aria-hidden="true">↗</span>
+        </span>
+      </div>
+    </footer>
+  );
 }

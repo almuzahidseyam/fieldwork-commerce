@@ -11,12 +11,27 @@ export function tableName() {
 export function database() {
   if (!singleton) {
     const endpoint = process.env.DYNAMODB_ENDPOINT;
-    if (endpoint && process.env.VERCEL_ENV === "production") throw new Error("Production must use AWS DynamoDB");
-    singleton = DynamoDBDocumentClient.from(new DynamoDBClient({
-      region: process.env.AWS_REGION || "us-east-1",
-      ...(endpoint ? { endpoint, credentials: { accessKeyId: "local", secretAccessKey: "local" } } : process.env.AWS_ROLE_ARN ? { credentials: awsCredentialsProvider({ roleArn: process.env.AWS_ROLE_ARN }) } : {}),
-      maxAttempts: 3
-    }), { marshallOptions: { removeUndefinedValues: true } });
+    if (endpoint && process.env.VERCEL_ENV === "production")
+      throw new Error("Production must use AWS DynamoDB");
+    singleton = DynamoDBDocumentClient.from(
+      new DynamoDBClient({
+        region: process.env.AWS_REGION || "us-east-1",
+        ...(endpoint
+          ? {
+              endpoint,
+              credentials: { accessKeyId: "local", secretAccessKey: "local" },
+            }
+          : process.env.AWS_ROLE_ARN
+            ? {
+                credentials: awsCredentialsProvider({
+                  roleArn: process.env.AWS_ROLE_ARN,
+                }),
+              }
+            : {}),
+        maxAttempts: 3,
+      }),
+      { marshallOptions: { removeUndefinedValues: true } },
+    );
   }
   return singleton;
 }

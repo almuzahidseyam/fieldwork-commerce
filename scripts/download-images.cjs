@@ -4,7 +4,9 @@ const images = {
   headphones: "photo-1546435770-a3e426bf472b",
   sneakers: "photo-1549298916-b41d501d3772",
   chair: "photo-1567538096630-e0c55bd6374c",
-  duffel: "photo-1553062407-98eeb64c6a62",
+  // Erik Mclean / Unsplash, original photo ID VBHuX2SNLZ4.
+  duffel:
+    "https://media.traveler.es/photos/686b8e37613e0eaa66c3f113/4%3A3/w_2664%2Ch_1998%2Cc_limit/erik-mclean-VBHuX2SNLZ4-unsplash.jpg",
   tote: "photo-1590874103328-eac38a683ce7",
   tee: "photo-1521572163474-6864f9cf17ab",
   plant: "photo-1485955900006-10f4d324d411",
@@ -17,7 +19,9 @@ const images = {
 };
 Promise.allSettled(
   Object.entries(images).map(async ([name, id]) => {
-    const url = `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${name === "hero" ? 1600 : 900}&q=85`;
+    const url = id.startsWith("https://")
+      ? id
+      : `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${name === "hero" ? 1600 : 900}&q=85`;
     const r = await fetch(url);
     if (!r.ok) throw Error(`${name}: ${r.status}`);
     fs.writeFileSync(

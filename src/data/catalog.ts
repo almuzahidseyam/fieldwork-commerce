@@ -113,7 +113,7 @@ export const products: Product[] = [
     price: 11900,
     currency: "USD",
     image: "/images/duffel.jpg",
-    color: "Olive",
+    color: "Black & tan",
     stock: 10,
     featured: false,
     description:
@@ -127,21 +127,21 @@ export const products: Product[] = [
   },
   {
     slug: "daily-tote",
-    name: "Daily Tote",
+    name: "Market Bag",
     category: "carry",
     price: 3900,
     currency: "USD",
     image: "/images/tote.jpg",
-    color: "Ecru",
+    color: "Cognac",
     stock: 30,
     featured: false,
     description:
-      "The bag you reach for on your way out. Simple, spacious, and ready for books, groceries, and everyday odds and ends.",
+      "A warm woven finish and a little everyday character. A structured bag for keeping the small essentials close, from a morning coffee to an afternoon out.",
     details: [
-      "Heavyweight cotton canvas",
-      "Comfortable shoulder handles",
+      "Woven body with smooth trim",
+      "Comfortable top carry handle",
       "Interior slip pocket",
-      "Folds flat for storage",
+      "Adjustable shoulder strap",
     ],
   },
   {
@@ -171,14 +171,14 @@ export const products: Product[] = [
     price: 2800,
     currency: "USD",
     image: "/images/plant.jpg",
-    color: "Terracotta",
+    color: "Mint",
     stock: 16,
     featured: false,
     description:
       "A little green goes a long way. Give your favorite plant a warm, understated home and your shelf a new focal point.",
     details: [
       "Ceramic pot",
-      "Drainage hole and matching saucer",
+      "Smooth glazed finish",
       "15cm diameter",
       "Plant shown for styling",
     ],

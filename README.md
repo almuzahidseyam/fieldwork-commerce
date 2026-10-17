@@ -142,6 +142,10 @@ See the [reviewer walkthrough](docs/REVIEWER_GUIDE.md) and [API reference](docs/
 - [Product details — desktop](docs/screenshots/product-desktop.jpg)
 - [Shopping bag — desktop](docs/screenshots/cart-desktop.jpg)
 - [Wishlist — desktop](docs/screenshots/wishlist-desktop.jpg)
+- [Homepage — mobile](docs/screenshots/home-mobile.jpg)
+- [Shopping bag — mobile](docs/screenshots/cart-mobile.jpg)
+
+See [verification notes](docs/VERIFICATION.md) for the executed checks and [deployment notes](docs/DEPLOYMENT.md) for the configured infrastructure and rollback procedure.
 
 ## Scope and limitations
 

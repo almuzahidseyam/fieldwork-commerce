@@ -2,6 +2,8 @@
 
 A full-stack commerce application for the Tynoc Software Engineer Intern assignment. Discover a database-backed catalog, combine search and filters, inspect products, maintain a persistent bag and wishlist, and manage a private guest profile.
 
+**[Live demo](https://fieldwork-commerce.vercel.app)** · **[Source code](https://github.com/almuzahidseyam/fieldwork-commerce)** · **[Reviewer walkthrough](docs/REVIEWER_GUIDE.md)**
+
 **Demonstration store: no orders or payments are processed.** Products, prices, stock, and specifications are sample data. Photographs are illustrative. Profiles use opaque guest sessions rather than registered accounts or email sign-in.
 
 ![Fieldwork storefront](docs/screenshots/home-desktop.jpg)

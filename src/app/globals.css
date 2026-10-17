@@ -1721,7 +1721,7 @@ select:focus-visible {
     letter-spacing: 1.3px;
   }
   .hero h1 {
-    font-size: 66px;
+    font-size: clamp(52px, 16vw, 66px);
     letter-spacing: -2.8px;
     margin: 30px 0 23px;
   }
@@ -1823,15 +1823,15 @@ select:focus-visible {
     gap: 4px;
   }
   .product-category {
-    font-size: 6px;
+    font-size: 8px;
     letter-spacing: 0.5px;
   }
   .product-meta h3 {
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1.5;
   }
   .product-price {
-    font-size: 10px;
+    font-size: 12px;
     margin-top: 16px;
   }
   .product-detail-link {
@@ -1849,17 +1849,17 @@ select:focus-visible {
     max-width: 90px;
   }
   .save-button {
-    width: 27px;
-    height: 27px;
+    width: 36px;
+    height: 36px;
     right: 6px;
     top: 6px;
   }
   .save-button svg {
-    width: 14px;
+    width: 17px;
   }
   .quick-add {
-    font-size: 8px;
-    min-height: 30px;
+    font-size: 10px;
+    min-height: 40px;
     left: 7px;
     right: 7px;
     bottom: 7px;

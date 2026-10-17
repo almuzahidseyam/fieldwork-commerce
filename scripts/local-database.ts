@@ -1,0 +1,10 @@
+import { mkdirSync, existsSync } from "node:fs";
+import { spawn } from "node:child_process";
+import { resolve } from "node:path";
+mkdirSync(".data/dynamo", { recursive: true });
+const runtime = resolve(process.env.DYNAMODB_LOCAL_DIR || ".data/runtime");
+if (!existsSync(resolve(runtime, "DynamoDBLocal.jar"))) throw new Error("Download AWS DynamoDB Local first. See README.md.");
+const java = process.env.JAVA_BIN || "java";
+const child = spawn(java, [`-Djava.library.path=${resolve(runtime, "DynamoDBLocal_lib")}`, "-jar", resolve(runtime, "DynamoDBLocal.jar"), "-sharedDb", "-dbPath", resolve(".data/dynamo"), "-port", process.env.DYNAMODB_LOCAL_PORT || "8879"], { stdio: "inherit", windowsHide: true });
+child.on("exit", code => process.exit(code || 0));
+process.on("SIGINT", () => child.kill("SIGINT"));

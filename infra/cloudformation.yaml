@@ -1,0 +1,109 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Fieldwork commerce database and narrowly scoped Vercel OIDC access
+Parameters:
+  VercelTeam:
+    Type: String
+    Default: almuzahidseyam
+  VercelProject:
+    Type: String
+    Default: fieldwork-commerce
+  CreateOidcProvider:
+    Type: String
+    AllowedValues: ['true', 'false']
+    Default: 'true'
+Conditions:
+  NeedsProvider: !Equals [!Ref CreateOidcProvider, 'true']
+Resources:
+  CommerceTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: fieldwork-commerce
+      BillingMode: PROVISIONED
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+        - AttributeName: GSI1PK
+          AttributeType: S
+        - AttributeName: GSI1SK
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: CatalogIndex
+          KeySchema:
+            - AttributeName: GSI1PK
+              KeyType: HASH
+            - AttributeName: GSI1SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+          ProvisionedThroughput:
+            ReadCapacityUnits: 3
+            WriteCapacityUnits: 2
+      TimeToLiveSpecification:
+        AttributeName: expiresAt
+        Enabled: true
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: fieldwork-commerce
+  VercelProvider:
+    Type: AWS::IAM::OIDCProvider
+    Condition: NeedsProvider
+    Properties:
+      Url: !Sub https://oidc.vercel.com/${VercelTeam}
+      ClientIdList:
+        - !Sub https://vercel.com/${VercelTeam}
+  CommerceRole:
+    Type: AWS::IAM::Role
+    DependsOn: CommerceTable
+    Properties:
+      RoleName: fieldwork-vercel-commerce
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: !If
+                - NeedsProvider
+                - !Ref VercelProvider
+                - !Sub arn:aws:iam::${AWS::AccountId}:oidc-provider/oidc.vercel.com/${VercelTeam}
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                oidc.vercel.com/almuzahidseyam:aud: !Sub https://vercel.com/${VercelTeam}
+                oidc.vercel.com/almuzahidseyam:sub: !Sub owner:${VercelTeam}:project:${VercelProject}:environment:production
+      Policies:
+        - PolicyName: fieldwork-table-only
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                  - dynamodb:Query
+                  - dynamodb:BatchWriteItem
+                Resource:
+                  - !GetAtt CommerceTable.Arn
+                  - !Sub ${CommerceTable.Arn}/index/CatalogIndex
+Outputs:
+  TableName:
+    Value: !Ref CommerceTable
+  RuntimeRoleArn:
+    Value: !GetAtt CommerceRole.Arn
+  DatabaseRegion:
+    Value: !Ref AWS::Region
